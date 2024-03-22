@@ -1,0 +1,91 @@
+.bg-container {
+    /* background-image: radial-gradient(#c294d1, #4b4a7e); */
+    background-image: radial-gradient(#fca77a, #f1f9e2);
+    min-height: 100vh;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.heading {
+    color: #ffffff;
+    font-family: "Roboto";
+    text-align: center;
+    font-size: 36px;
+    width: 90%;
+    max-width: 1000px;
+}
+
+@media screen and (min-width:768px) {
+    .heading {
+        font-size: 46px;
+    }
+}
+
+.cards-container {
+    width: 60%;
+    max-width: 1100px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: 23px;
+    margin-bottom: 20px;
+}
+
+.card-details-container {
+    flex-grow: 1;
+}
+
+.quote {
+    color: #6e798c;
+    font-family: "Roboto";
+    font-size: 16px;
+    margin: 0px;
+    margin-bottom: 18px;
+}
+
+.name {
+    color: #081f32;
+    font-family: "Roboto";
+    font-size: 20px;
+    margin: 0px;
+}
+
+.image {
+    width: 80px;
+}
+
+@media screen and (min-width:768px) {
+    .image {
+        width: 120px;
+    }
+}
+
+/* .icon-lavender {
+    color: #5d408c;
+}
+
+.icon-blue {
+    color: #2a4eaa;
+}
+
+.icon-purple {
+    color: #9e619b;
+}
+
+.icon-violet {
+    color: #391484;
+} */
