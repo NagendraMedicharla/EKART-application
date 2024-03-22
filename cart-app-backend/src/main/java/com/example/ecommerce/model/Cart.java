@@ -22,9 +22,9 @@ public class Cart {
 
     private String image;
 
-    private  double price;
+    private Long price;
 
-    private double offerPrice;
+    private Long offerPrice;
 
     private Long quantity;
 

@@ -8,10 +8,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     const response = await fetch(`http://localhost:8083/products/all`, {
-      method: "GET",
-      // headers: {
-      //   "content-Type": "application/json",
-      // },
+      method: "GET"
     });
     const data = await response.json();
     if (response.status < 200 || response.status >= 300) {

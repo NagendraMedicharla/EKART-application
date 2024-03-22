@@ -2,21 +2,84 @@ import "./NavBar.css";
 import logo from "../assets/cart_image2.jpg";
 import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
-// import MailIcon from '@mui/icons-material/Mail';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { fetchProducts } from "../../features/productSlice";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap";
+import { IconButton, Menu, MenuItem, Box } from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { logout } from "../../features/loginSlice";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const { isLoggedIn } = useSelector((state) => state.login);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    dispatch(logout());
+  };
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+
+  const renderMenuLogin = () => {
+    return (
+      <>
+        {isLoggedIn ? (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              sx={{ mt: "50px" }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleLogout}>Log out</MenuItem>
+            </Menu>
+          </Box>
+        ) : (
+          <div className="nav-login-cart">
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+          </div>
+        )}
+      </>
+    );
+  };
 
   return (
     <div className="nav-bar">
@@ -33,62 +96,53 @@ export default function NavBar() {
         />
       </div>
       <ul className="nav-menu">
-        {/* <Link to="/" style={{textDecoration: 'none'}}><li>Home</li></Link>
-                <li><Link style={{textDecoration: 'none'}}><li>Category</li></Link></li>
-                <li><Link to="/wishlist" style={{textDecoration: 'none'}}><li>Wishlist</li></Link></li>
-                <li><Link to="/cart" style={{textDecoration: 'none'}}><li>Cart</li></Link></li> */}
-        <li >
+        <li>
           <Link to="/" style={{ textDecoration: "none" }}>
             <div className="nav-li-items">
-                <HomeIcon />
-                <span>Home</span>
+              <HomeIcon />
+              <span>Home</span>
             </div>
           </Link>
         </li>
         <li>
-          {/* <Link style={{textDecoration: 'none'}}>Category</Link>
-                    <div className='sub-nav-menu'>
-                        <ul>
-                            <Link to="/products/all">All Products</Link>
-                            <Link to='/products/men'><li>Men</li></Link>
-                            <Link to='/products/women'><li>Women</li></Link>
-                            <Link to='/products/jewelery'><li>jewelery</li></Link>
-                            <Link to='/products/electronics'><li>Electronics</li></Link>
-                        </ul>
-                    </div> */}
           <NavDropdown title={<span>Categories</span>} id="basic-nav-dropdown">
             <ul>
-                <Link to="/products/all" style={{textDecoration: 'none'}}>All Products</Link>
-                <Link to='/products/men' style={{textDecoration: 'none'}}><li>Men</li></Link>
-                <Link to='/products/women' style={{textDecoration: 'none'}}><li>Women</li></Link>
-                <Link to='/products/jewelery' style={{textDecoration: 'none'}}><li>jewelery</li></Link>
-                <Link to='/products/electronics' style={{textDecoration: 'none'}}><li>Electronics</li></Link>
+              <Link to="/products/all" className="textDecorationNone">
+                All Products
+              </Link>
+              <Link to="/products/men" className="textDecorationNone">
+                <li>Men</li>
+              </Link>
+              <Link to="/products/women" className="textDecorationNone">
+                <li>Women</li>
+              </Link>
+              <Link to="/products/jewelery" className="textDecorationNone">
+                <li>jewelery</li>
+              </Link>
+              <Link to="/products/electronics" className="textDecorationNone">
+                <li>Electronics</li>
+              </Link>
             </ul>
           </NavDropdown>
         </li>
         <li>
-          <Link to="/wishlist" style={{ textDecoration: "none" }}>
+          <Link to="/wishlist" className="textDecorationNone">
             <li>
-              {/* Wishlist */}
               <FavoriteIcon />
             </li>
           </Link>
         </li>
         <li>
-          <Link to="/cart" style={{ textDecoration: "none" }}>
+          <Link to="/cart" className="textDecorationNone">
             <div className="nav-li-items">
-              <Badge color="secondary" badgeContent={4}>
+              <Badge color="secondary" badgeContent={cartItems?.length}>
                 <ShoppingCartIcon />
               </Badge>
             </div>
           </Link>
         </li>
       </ul>
-      <div className="nav-login-cart">
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
-      </div>
+      {renderMenuLogin()}
     </div>
   );
 }

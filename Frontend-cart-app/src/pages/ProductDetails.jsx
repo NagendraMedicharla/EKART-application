@@ -7,8 +7,7 @@ export default function ProductDetails(){
     const productList = useSelector((state)=>state.product.product_list)
 
     const product = productList.find(item => item.id === Number(productId))
-
-    
+   
     return(
         <div>
             <DisplayProduct product={product}/>

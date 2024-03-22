@@ -22,7 +22,7 @@ public class WishList {
 
     private String image;
 
-    private  double price;
+    private  Long price;
 
-    private double offerPrice;
+    private Long offerPrice;
 }

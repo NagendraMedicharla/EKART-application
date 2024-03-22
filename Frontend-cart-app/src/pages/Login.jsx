@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
-import {Formik,Form, Field, ErrorMessage, validateYupSchema} from 'formik'
-import * as Yup from 'yup';
+import { Formik, Form, Field, ErrorMessage, validateYupSchema } from "formik";
+import * as Yup from "yup";
 
 // const validationSchema = Yup.object().shape({
 //   email:Yup.string().email('Invalid email').required('Required'),
@@ -24,14 +24,12 @@ export default function LoginSignup() {
   const navigate = useNavigate();
   // const [submitForm, setSubmitForm]=useState(true)
 
-
   const handleChange = (e) => {
     setLoginDetails((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
-
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -58,7 +56,6 @@ export default function LoginSignup() {
       <form onSubmit={handleLogin} className="login-container">
         <h1>Login</h1>
         <div className="login-fields">
-
           <TextField
             id="email"
             type="email"
@@ -79,7 +76,9 @@ export default function LoginSignup() {
           />
         </div>
         <div className="login-btn-container">
-          <Button type="submit" variant="contained">Login</Button>
+          <Button type="submit" variant="contained">
+            Login
+          </Button>
         </div>
         <div>
           <p>

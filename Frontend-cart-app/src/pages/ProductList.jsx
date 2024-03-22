@@ -61,6 +61,7 @@ export default function ProductList() {
                 title={item.title}
                 price={item.price}
                 rating={item.rating}
+                offerPrice={item.offerPrice}
               />
             );
           }

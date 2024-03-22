@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 const initialLoginState = {
   email: "",
   jwt_token: "",
+  isLoggedIn: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -24,7 +24,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-
 export const registerUser = createAsyncThunk(
   "register/registerUser",
   async (payload, { rejectWithValue }) => {
@@ -42,25 +41,31 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
 const loginSlice = createSlice({
   name: "login",
   initialState: initialLoginState,
   reducers: {
     user: (state, action) => {
-        state.email= action.payload.email
-    }
+      state.email = action.payload.email;
+    },
+    logout: (state) => {
+      state.email = "";
+      state.jwt_token = "";
+      state.isLoggedIn = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.jwt_token = action.payload?.token
+      state.jwt_token = action.payload?.token;
+      state.isLoggedIn = true;
     });
     builder.addCase(loginUser.rejected, (state, action) => {
-      state.jwt_token = ""
+      state.jwt_token = "";
+      state.isLoggedIn = false;
     });
   },
 });
 
-export const { user } = loginSlice.actions;
+export const { user, logout } = loginSlice.actions;
 
 export default loginSlice.reducer;

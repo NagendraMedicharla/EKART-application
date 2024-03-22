@@ -11,7 +11,7 @@
     margin: auto;
     padding: 20px 30px;
     border-radius: 10px;
-    background-image: linear-gradient(rgb(250, 225, 173), rgb(249, 226, 226));
+    background-image: linear-gradient( rgb(245, 232, 189), rgb(250, 190, 148));
 }
 .register-container h1{
     margin: 5px 0px;

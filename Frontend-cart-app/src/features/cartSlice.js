@@ -1,78 +1,46 @@
-// import { createSlice } from "@reduxjs/toolkit";
-
-// initialCartSate = [];
-
-// export const fetchProducts = createAsyncThunk(
-//   "cart/fetchCart",
-//   async (_, { rejectWithValue }) => {
-//     const response = await fetch(`http://localhost:8083/getcartlist/{email}`);
-//     const data = await response.json();
-//     if (response.status < 200 || response.status >= 300) {
-//       return rejectWithValue(data);
-//     }
-//     return data;
-//   }
-// );
-
-// const productSlice = createSlice({
-//   name: "products",
-//   initialState: initialProductSate,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-//       return action.payload;
-//     });
-//     builder.addCase(fetchProducts.rejected, () => {
-//       return [];
-//     });
-//   },
-// });
-
-// export default productSlice.reducer;
-
-
 import { createSlice } from "@reduxjs/toolkit";
 
-const intialCartState = {items:[], totalQuantity:0}
+const intialCartState = { items: [] };
 
 const cartSlice = createSlice({
-    name: 'cart',
-    initialState:intialCartState,
-    reducers:{
-        addItemtoCart(state, action){
-            const newItem = action.payload;
-            const existingItem = state.items.find(item=> item.id === newItem.id)
-            state.totalQuantity++
-            if(!existingItem){
-                state.items.push({
-                    id:newItem.id,
-                    price:newItem.price,
-                    quantity:1,
-                    totalPrice:newItem.price,
-                    name:newItem.title
-                })
-            } else{
-                existingItem.quantity++;
-                existingItem.totalPrice = existingItem.totalPrice + newItem.price;          
-            }
-        },
+  name: "cart",
+  initialState: intialCartState,
+  reducers: {
+    addItemtoCart(state, action) {
+      const newItem = action.payload;
+      const existingItem = state.items.find((item) => item.id === newItem.id);
+      if (!existingItem) {
+        state.items.push({
+          id: newItem.id,
+          price: newItem.offerPrice,
+          quantity: 1,
+          name: newItem.title,
+          image: newItem.image,
+        });
+      } else {
+        existingItem.quantity++;
+      }
+    },
 
-        removeItemFromCart(state, action){
-            const id = action.payload;
-            const existingItem = state.items.find((item)=>item.id === id);
-            state.totalQuantity--;
-            // state.changed = true;
-            if(existingItem.quantity ===1){
-                state.items = state.items.filter((item)=>item.id !==id)
-            }else{
-                existingItem.quantity--;
-                // existingItem.totalPrice = existingItem.totalPrice - existingItem.price
-            }
+    decrementItemFromCart(state, action) {
+      const removeItem = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.id === removeItem.id
+      );
+      if (existingItem.quantity === 1) {
+        state.items = state.items.filter((item) => item.id !== removeItem.id);
+      } else {
+        existingItem.quantity--;
+      }
+    },
+    deleteItemFromCart(state, action) {
+      const removeItem = action.payload;
+      state.items = state.items.filter((item) => item.id !== removeItem.id);
+    },
+  },
+});
 
-        }
-    }
-})
-
-export const {cartAction} = cartSlice.actions
+export const { addItemtoCart, decrementItemFromCart, deleteItemFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

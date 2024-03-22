@@ -26,8 +26,8 @@ public class Product {
     @Column(length = 7000)
     private String description;
 
-    private  double price;
+    private  Long price;
 
-    private double offerPrice;
+    private Long offerPrice;
 
 }

@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/loginSlice";
-import { Snackbar, Alert } from "@mui/material";
+import CustomSnackbar from "../components/snackbar/Snackbar";
 
 export default function Registration() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function Registration() {
     email: "",
     password: "",
   });
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     setRegistrationDetails((prevState) => ({
@@ -32,7 +32,7 @@ export default function Registration() {
           setOpen(true);
           setTimeout(() => {
             navigate("/login");
-          }, 2000)
+          }, 2000);
         } else {
           alert("Invalid credentials!");
         }
@@ -44,26 +44,17 @@ export default function Registration() {
 
   const handleClose = () => {
     setOpen(false);
-  }
-
-  const renderSnackBar = () => {
-    return (
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{vertical: 'top', horizontal: 'right' }}>
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: "100%", mt: "40px" }}
-        >
-          User Registered successfully!
-        </Alert>
-      </Snackbar>
-    );
   };
 
   return (
     <div className="register-page">
-      {open && renderSnackBar()}
+      {open && (
+        <CustomSnackbar
+          open={open}
+          onClose={handleClose}
+          message={"User Registered successfully!"}
+        />
+      )}
       <form onSubmit={handleRegistration} className="register-container">
         <h1>Register</h1>
         <div className="register-fields">
