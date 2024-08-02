@@ -21,7 +21,6 @@ export default function CartItem() {
       dispatch(deleteItemFromCart(item));
     }
   };
-
   const renderCartItems = () => {
     return (
       <div className="cart-item">

@@ -37,6 +37,7 @@ export default function ProductList() {
     setCurrentPage(page);
   };
 
+  
   const itemsPerPage = 6;
   const indexOfLastRecord = currentPage * itemsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - itemsPerPage;
